@@ -1,0 +1,58 @@
+distinct()
+==========
+db.student.distinct("name")
+
+Skip()
+======
+db.Student.find().skip(1)
+db.Student.find().skip(2)
+
+Index Creation()
+===============
+db.Student.createIndex({name:1})
+db.Student.createIndex({name:-1})
+db.Student.createIndexes([{name:1,department:-1}] -multiple indexing
+
+getIndexes()
+=========
+db.student.getIndexes()
+
+dropIndex()
+===========
+db.student.dropIndex(name:1)
+db.student.dropIndexes(name:1)
+
+Comparision operator Queries in Mongodb:
+========================================
+db.Student.find({name: {$nin: ["abc", "xyz"]}}).pretty() 
+db.Student.find({name: {$in: ["abc", "xyz"]}}).pretty() 
+db.faculty.find({salary: {$lt: 2000}}).pretty()
+db.faculty.find({salary: {$gt: 2000}}).pretty()
+db.faculty.find({salary: {$lte: 100000}}).pretty()
+db.faculty.find({Department: {$eq: "CSE"}}).pretty()
+db.faculty.find({Department: {$ne: "CSE"}}).pretty()
+db.faculty.find({DOJ: {$gte: 2021}})
+
+cmp
+===
+//three results will be returned{19if first greater than second),-1(first less than second),0(first and second both equal)}
+
+db.example.aggregate([{$match: {name: "Square"}},
+{$project: {result: {$cmp:["$side", 4]}}}])
+
+db.example.aggregate([{$match: {name: "Rectangle"}},
+{$project: {result:{$cmp:["$measurement.height", "$measurement.width"]}}}])
+
+Logical operators:
+=================
+db.faculty.find({$and: [{Department: "CSE"}, {DOJ: 2021}]}).pretty()
+db.faculty.find({$or: [{Department: "CSE"}, {DOJ: 2021}]}).pretty()
+db.faculty.find({salary: {$not: {$gt: 2000}}}).pretty()
+db.faculty.find({$nor: [{salary: 3000}, {Department: "ECE"}]}).pretty()
+db.faculty.find({$and: [{Department: {$eq: "CSE"}}, {Department: {$exists: true}}]}).pretty()
+db.faculty.find({department: {$eq: "CSE", $exists: true}}).pretty()
+db.faculty.find({$and: [{$or: [{Department: "ECE"}, {DOJ: 2021}]}, {$or: [{"faculty.state": "Karnataka"},{"faculty.age": 25}]}]}).pretty()
+
+
+
+

@@ -1,0 +1,162 @@
+Mongodb Commands:
+===================
+Create Database: Use University
+Create minimum three collections(student,faculty,course)
+Student(stid,stname,stadd,stemail,stph)-3 documents
+Faculty(sid,fname,fadd,fDOJ,Femai,fph)-3 documents
+Course(Cid,Cname,Falloted,NoHors,Credits)-3 documents
+Insert the documents to each Collection
+db.collectionname.insert()
+db.student.insert()
+db.collectionname.insertmany()
+db.collectionname.find()
+db.collectionname.findmany()
+db.collectionname.delete()
+db.collectionname.deleteone()
+db.collectionname.updateone()
+db.collectionname.updatemany()
+db.collectionname.dropdatabase()
+db.collectionname.sort()
+db.collectionname.size()
+db.collectionname.find({stdid:1})
+dbcollectionname.find({stdid:2},{stname:1,stadd:1})
+dbcollectionname.find({"std.faculty.course.cname:"/NoSQL Database/})
+Syntax of Cursor Creation:
+==========================
+var name = db.collection_name.find()
+name
+eg:
+var C1 = db.student.find({studentId:3}).pretty()
+C1
+
+Next() method:
+=============
+var mycursor = db.student.find({studentId:{$gt:1}});
+while(mycursor.hasNext())
+{
+   print(tojson(mycursor.next()));
+}
+
+foreach()
+========
+var mycursor = db.student.find({studentId:3}).pretty()
+mycursor.forEach(printjson)
+
+cursor.ToArray()
+==============
+var mycursor = db.student.find().pretty()
+var docs = mycursor.toArray()
+var resultdoc = docs[0]
+resultdoc
+
+count()
+========
+db.collection_name.find().count()
+db.student.find().count()
+
+limit()
+=======
+b.collection_name.find().limit(<number>)
+b.student.find().limit(2).pretty()
+
+size()
+======
+db.collection_name.find().size()
+db.student.find({studentId:1}).size()
+
+sort()
+======
+db.collection_name.find().sort(<sort>)
+db.student.find().sort({studentId:-1}).pretty()
+
+next()
+======
+db.student.find().next()
+
+Pretty()
+=======
+db.Student.find().pretty() 
+
+Sample queries:
+===============
+db.Student.find({Sname:{$eq:"abc"}}).pretty()  
+db.Student.find({length:{$gte:10}}).pretty()
+db.Student.find({Sadd:{$exists:"true"}}).pretty()
+
+bulk()
+======
+bulk insert()
+
+//the initializeUnorderedBulkOp() method is used to generate an unordered list that MongoDB runs in bulk
+
+var bulk = db.Student.initializeUnorderedBulkOp();
+bulk.insert( { first_name: "Sachin", last_name: "Tendulkar" } );
+bulk.insert( { first_name: "Virender", last_name: "Sehwag" } );
+bulk.insert( { first_name: "Shikhar", last_name: "Dhawan" } );
+bulk.insert( { first_name: "Mohammed", last_name: "Shami" } );
+bulk.insert( { first_name: "Shreyas", last_name: "Iyer" } );
+bulk.execute();
+
+//initializeOrderedBulkOp() method is used to generate an ordered list that MongoDB runs in bulk.
+
+bulk.insert( { first_name: "Robin", last_name: "Marvin" } );
+bulk.insert( { first_name: "John", last_name: "Hudson" } );
+bulk.insert( { first_name: "Nancy", last_name: "Drew" } );
+bulk.insert( { first_name: "Tom", last_name: "Wheeler" } );
+bulk.insert( { first_name: "Anna", last_name: "Ryder" } );
+bulk.execute();
+
+bulkWrite()
+===========
+Syntax:
+db.collection.bulkWrite([{insertOne: {“document” : <document>}}])
+eg:
+try{
+db.students.bulkWrite([
+{insertOne:{“document”:{studentId:4, studentName:”GeekD”, studentAge:24}}},
+{insertOne:{“document”:{studentId:4, studentName:”GeekD”, studentAge:24}}}
+]);
+}catch(e){
+print(e);
+}
+
+
+findAndModify()
+============
+db.student.findAndModify({query:{name:"vishal"},update:{$inc:{score:4}}})
+
+findOneAndDelete()
+================
+db.student.findOneAndDelete({age:17},{sort:{age:-1}})
+
+findOneAndReplace()
+================
+db.student.findOneAndReplace({age:17},{name:"Mihir", age:17})
+
+findOneAndUpdate()
+=================
+db.student.findOneAndUpdate({name:"Ashok"},{$inc:{"score.math":50}})
+
+sort()
+=====
+db.student.find().sort({age:1})
+db.student.find().sort({age:-1})
+
+copyTo()
+=======
+db.collectionA.copyTo("collectionB")
+
+count()
+=======
+db.student.count({age:{$gt:18}})
+
+
+countDocuments()
+================
+db.student.countDocuments({age:{$gt:18}})
+
+
+
+
+
+
